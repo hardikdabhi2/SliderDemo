@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 final List<String> imgList = [
-  'https://i.picsum.photos/id/343/500/300.jpg?blur=5&hmac=1Xrd55Vebz7NCW8lLKa4teXMl4wfjONBN8sxlCjPtoo',
   'https://i.picsum.photos/id/866/500/300.jpg?hmac=gTBX2xIXKy_WSASp2ITBfmK7WFeBZyiuIumiEUmowcw',
   'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE',
   'https://i.picsum.photos/id/870/500/300.jpg?blur=2&grayscale&hmac=J8YcDKD75Pcbp0SlslavgdJhEHbja1KjLJ2_WP_jZbg',
@@ -105,7 +104,6 @@ class PrefetchImageDemo extends StatefulWidget {
 
 class _PrefetchImageDemoState extends State<PrefetchImageDemo> {
   final List<String> images = [
-  'https://i.picsum.photos/id/343/500/300.jpg?blur=5&hmac=1Xrd55Vebz7NCW8lLKa4teXMl4wfjONBN8sxlCjPtoo',
   'https://i.picsum.photos/id/866/500/300.jpg?hmac=gTBX2xIXKy_WSASp2ITBfmK7WFeBZyiuIumiEUmowcw',
   'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE',
   'https://i.picsum.photos/id/870/500/300.jpg?blur=2&grayscale&hmac=J8YcDKD75Pcbp0SlslavgdJhEHbja1KjLJ2_WP_jZbg',
@@ -122,9 +120,9 @@ class _PrefetchImageDemoState extends State<PrefetchImageDemo> {
     super.initState();
   }
 
-_setVerticleHeight(){
+_setHorizontalItem(){
   return new Container(
-    height: 330,
+    height: 250,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -143,51 +141,13 @@ _setVerticleHeight(){
           ),
         ),
         Expanded(
-        child: new GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio:0.7,
-        children: new List<Widget>.generate(images.length, (index) {
-          return new Container(
-                width: MediaQuery.of(context).size.width/2,
-                height: 280,
-                color: Colors.white,
-                padding: new EdgeInsets.all(8),
-                child: Material(
-                  elevation: 2.0,
-                  borderRadius: BorderRadius.circular(8),
-                  child: new Column(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 5,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image:NetworkImage(images[index]),
-                              fit: BoxFit.cover
-                              ),
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
-                          ),
-                        )
-                    ),
-                    Expanded(
-                      flex: 2,
-                        child: Container(
-                          padding: new EdgeInsets.all(8),
-                          child: Column(
-                            children: <Widget>[
-                              setCommonWidget('Title:','Adidas Shoes',Colors.black87),
-                              setCommonWidget('Description:','description',Colors.black38),
-                              setCommonWidget('Price:','\$20',Colors.black38),
-                            ],
-                          ),
-                        )
-                    ),
-                    ],
-                  ),
-                ),
-              );
-            }),
-            ),
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: images.length,
+          itemBuilder: (context,index){
+            return _setComonContainerView(context, images[index]);
+          }
+          )
         ),
       ],
     ),
@@ -216,6 +176,34 @@ _setCorosalEffets(){
           );
 }
 
+
+_setBanner(){
+  return new Container(
+    height: 280,
+    color: Colors.white,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+          itemCount: images.length,
+          itemBuilder: (context,index){
+            return new Container(
+              width: MediaQuery.of(context).size.width,
+              padding: new EdgeInsets.all(8),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(images[index]),
+                    fit: BoxFit.cover
+                  ),
+                  borderRadius: BorderRadius.circular(8)
+                ),
+              ),
+            );
+          }
+          )
+  );
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,8 +214,9 @@ _setCorosalEffets(){
       body: ListView(
         children: <Widget>[
           _setCorosalEffets(),
-          _setVerticleHeight(),
-          _setCorosalEffets(),
+          _setHorizontalItem(),
+          _setBanner(),
+          _setHorizontalItem(),
         ],
       ),
     );
@@ -258,12 +247,9 @@ setCommonWidget(String title,String subtitle,Color color){
           );
 }
 
-
-/*
-
-new Container(
+_setComonContainerView(BuildContext context,String image){
+  return new Container(
                 width: MediaQuery.of(context).size.width/2,
-                height: 280,
                 color: Colors.white,
                 padding: new EdgeInsets.all(8),
                 child: Material(
@@ -276,23 +262,10 @@ new Container(
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image:NetworkImage(images[index]),
+                              image:NetworkImage(image),
                               fit: BoxFit.cover
                               ),
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
-                          ),
-                        )
-                    ),
-                    Expanded(
-                      flex: 2,
-                        child: Container(
-                          padding: new EdgeInsets.all(8),
-                          child: Column(
-                            children: <Widget>[
-                              setCommonWidget('Title:','Adidas Shoes',Colors.black87),
-                              setCommonWidget('Description:','description',Colors.black38),
-                              setCommonWidget('Price:','\$20',Colors.black38),
-                            ],
+                              borderRadius: BorderRadius.circular(8)
                           ),
                         )
                     ),
@@ -300,4 +273,4 @@ new Container(
                   ),
                 ),
               );
- */
+}
