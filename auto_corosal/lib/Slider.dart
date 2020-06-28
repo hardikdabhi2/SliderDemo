@@ -7,7 +7,15 @@ final List<String> imgList = [
   'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE',
   'https://i.picsum.photos/id/870/500/300.jpg?blur=2&grayscale&hmac=J8YcDKD75Pcbp0SlslavgdJhEHbja1KjLJ2_WP_jZbg',
   'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
+  'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE'
+];
+
+final fashionList = [
+    "Assets/img1.png",
+    "Assets/img2.png",
+    "Assets/img3.png",
+    "Assets/img4.png",
 ];
 
 void main() => runApp(CarouselDemo());
@@ -108,7 +116,8 @@ class _PrefetchImageDemoState extends State<PrefetchImageDemo> {
   'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE',
   'https://i.picsum.photos/id/870/500/300.jpg?blur=2&grayscale&hmac=J8YcDKD75Pcbp0SlslavgdJhEHbja1KjLJ2_WP_jZbg',
   'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
+  'https://i.picsum.photos/id/237/500/300.jpg?hmac=31zB7Ceyovr2h1qoOGeI6Pg8iB8wDymSCLEasQlnHIE'
 ];
   @override
   void initState() {
@@ -179,27 +188,131 @@ _setCorosalEffets(){
 
 _setBanner(){
   return new Container(
-    height: 280,
+    height: 130,
     color: Colors.white,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
-          itemCount: images.length,
+          itemCount: 1,
           itemBuilder: (context,index){
             return new Container(
               width: MediaQuery.of(context).size.width,
-              padding: new EdgeInsets.all(8),
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(images[index]),
+                    image: AssetImage('Assets/offer.png'),
                     fit: BoxFit.cover
                   ),
-                  borderRadius: BorderRadius.circular(8)
                 ),
               ),
             );
           }
           )
+  );
+}
+
+_setColumnGridView(){
+  return new Container(
+    height: 650,
+    color: Colors.grey[200],
+    child: new GridView.count(
+        crossAxisCount: 2,
+        childAspectRatio: 0.7,
+        physics: NeverScrollableScrollPhysics(),
+        children: new List<Widget>.generate(fashionList.length, (index) {
+          return Container(
+            padding: new EdgeInsets.all(5),
+            child:
+                Container(
+                  padding: new EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 7,
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left:8,right:12),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image:AssetImage(fashionList[index]),
+                                    fit: BoxFit.cover
+                                     )
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                                right: 0,
+                                bottom: 10,
+                                child:Chip(label: Text(' 10% OFF ',style: TextStyle(color:Colors.white),),backgroundColor: Colors.red,)
+                                )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child:Container(
+                          padding: new EdgeInsets.all(8),
+                          child: new Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text('40.07 SAR',
+                                    style: new TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(width:5),
+                                  Stack(
+                                    alignment: Alignment.center,
+                                      children: [
+                                        Text('50.07',
+                                          style: new TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black54,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                        Container(
+                                          height:2,
+                                          width:45,
+                                          color:Colors.black54
+                                        )
+                                      ],
+                                  )
+                                ],
+                              ),
+                              SizedBox(height:5),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(Icons.favorite_border,color:Colors.grey,size:20),
+                                  SizedBox(width:2),
+                                  Text('124',
+                                          style: new TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                        )
+                    ],
+                  ),
+                ),
+          );
+        }),
+      ),
   );
 }
 
@@ -215,8 +328,10 @@ _setBanner(){
         children: <Widget>[
           _setCorosalEffets(),
           _setHorizontalItem(),
+          SizedBox(height:15),
           _setBanner(),
-          _setHorizontalItem(),
+          SizedBox(height:15),
+          _setColumnGridView()
         ],
       ),
     );
